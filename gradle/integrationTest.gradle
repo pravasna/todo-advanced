@@ -19,7 +19,9 @@ task integrationTest(type: Test) {
 startDatabase.dependsOn test
 integrationTest.dependsOn startAndPrepareDatabase
 stopDatabase.dependsOn integrationTest
-check.dependsOn stopDatabase
+task databaseIntegrationTest(dependsOn: stopDatabase)
+
+check.dependsOn databaseIntegrationTest
 
 sonarRunner {
     sonarProperties {
