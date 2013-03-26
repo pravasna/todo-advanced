@@ -17,7 +17,6 @@ task integrationTest(type: Test) {
 	testResultsDir = file("$testResultsDir/integration")
 }
 
-startDatabase.dependsOn test
 integrationTest.dependsOn startAndPrepareDatabase
 stopDatabase.dependsOn integrationTest
 task databaseIntegrationTest(dependsOn: stopDatabase)
