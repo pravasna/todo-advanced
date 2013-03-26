@@ -21,6 +21,10 @@ subprojects {
 		mavenCentral()
 	}
 	
+	test {
+		testResultsDir = file("$testResultsDir/unit")
+	}
+	
 	sonarRunner {
         sonarProperties {
             property 'sonar.sourceEncoding', 'UTF-8'
