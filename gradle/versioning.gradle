@@ -1,4 +1,4 @@
-ext.buildTimestamp = new Date().format('yyyy/MM/dd HH:mm:ss')
+ext.buildTimestamp = new Date().format('yyyyMMddHHmmss')
 
 version = new ProjectVersion(0, 1, System.env.SOURCE_BUILD_NUMBER)
 
