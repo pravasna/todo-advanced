@@ -14,21 +14,20 @@ uploadArchives {
     }
 }
 
-repositories {
-	maven {
-		url artifactoryFullRepoUrl
+task downloadBinaryArchive {
+	ext.repoPath = rootProject.group.replaceAll('\\.', '/')
+	ext.repoArtifact = rootProject.name
+	ext.repoVersion = project.version.toString()
+	ext.artifact = "${repoArtifact}-${repoVersion}.war"
+	ext.downloadedArtifact = new File("$buildDir/$artifact")	
+	
+	doLast {		
+		ext.binaryUrl = "$artifactoryContextUrl/simple/$artifactoryRepository/$repoPath/$repoArtifact/$repoVersion/$artifact"
+	
+		downloadedArtifact.withOutputStream { out ->
+			out << new URL(binaryUrl).openStream()
+		}
+	
+		assert downloadedArtifact.exists()
 	}
-}
-
-configurations {
-	deployable
-}
-
-dependencies {
-	deployable "com.manning.gia:todo:${project.version.toString()}"
-}
-
-task downloadBinaryArchive(type: Copy) {
-	from configurations.deployable.singleFile()
-	into buildDir
 }

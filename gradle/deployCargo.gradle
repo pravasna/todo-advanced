@@ -26,7 +26,7 @@ cargo {
     containerId = 'tomcat7x'
 
     deployable {
-	    file = downloadedArtifact
+	    file = file("${buildDir}/${project(':web').war.archiveName}")
         context = 'todo'
     }
 
