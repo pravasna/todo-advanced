@@ -16,20 +16,22 @@ dependencies {
           "org.codehaus.cargo:cargo-ant:$cargoVersion"
 }
 
-task downloadBinaryArchive(type: com.manning.gia.BinaryDownload) {
-	ext {
-		repoPath = project.group.replaceAll('\\.', '/')
-		repoBaseArtifactName = project(':web').war.baseName
-		repoVersion = project.version.toString()
-		repoArtifact = project(':web').war.archiveName
-		binaryUrl = "$artifactoryContextUrl/simple/$artifactoryRepository/$repoPath/$repoBaseArtifactName/$repoVersion/$repoArtifact"
+project(':web').afterEvaluate {
+	task downloadBinaryArchive(type: com.manning.gia.BinaryDownload) {
+		ext {
+			repoPath = project.group.replaceAll('\\.', '/')
+			repoBaseArtifactName = project(':web').war.baseName
+			repoVersion = project.version.toString()
+			repoArtifact = project(':web').war.archiveName
+			binaryUrl = "$artifactoryContextUrl/simple/$artifactoryRepository/$repoPath/$repoBaseArtifactName/$repoVersion/$repoArtifact"
+		}
+
+		sourceUrl = binaryUrl
+		targetBinary = file("$buildDir/$repoArtifact")	
 	}
 	
-	sourceUrl = binaryUrl
-	targetBinary = file("$buildDir/$repoArtifact")	
+	cargoDeployRemote.dependsOn downloadBinaryArchive
 }
-
-cargoDeployRemote.dependsOn downloadBinaryArchive
 
 ext.envTestHostname = 'localhost:8099'
 ext.envTestUsername = 'manager'
