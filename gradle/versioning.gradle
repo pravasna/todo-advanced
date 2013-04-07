@@ -5,9 +5,9 @@ version = new ProjectVersion(0, 1, System.env.SOURCE_BUILD_NUMBER)
 class ProjectVersion {
 	Integer major
 	Integer minor
-	Integer build
+	String build
 
-	ProjectVersion(Integer major, Integer minor, Boolean build) {
+	ProjectVersion(Integer major, Integer minor, String build) {
 	    this.major = major
 		this.minor = minor
 		this.build = build
