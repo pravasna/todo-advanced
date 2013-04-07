@@ -2,6 +2,7 @@ project(':web') {
     apply plugin: 'war'
     apply plugin: 'jetty'
 	apply from: "$rootDir/gradle/publishMaven.gradle"
+	apply from: "$rootDir/gradle/deployCargo.gradle"
 	apply from: "$rootDir/gradle/functionalTest.gradle"
 
     dependencies {
