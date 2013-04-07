@@ -1,30 +1,34 @@
 apply plugin: 'maven'
 
-ext.artifactoryUrl = 'http://localhost:8081/artifactory' 
+ext.artifactoryContextUrl = 'http://localhost:8081/artifactory' 
+ext.artifactoryRepository = 'libs-release-local'
+ext.artifactoryFullRepoUrl = "$artifactoryContextUrl/$artifactoryRepository"
 ext.artifactoryUsername = 'admin'
 ext.artifactoryPassword = 'password'
-ext.artifactoryRepository = 'libs-release-local'
 
 uploadArchives {		
     repositories.mavenDeployer {
-        repository(url: "$artifactoryUrl/$artifactoryRepository") {
+        repository(url: artifactoryFullRepoUrl) {
             authentication(userName: artifactoryUsername, password: artifactoryPassword)
         }
     }
 }
 
-ext.repoPath = project.group.replaceAll('.', '/')
-ext.repoArtifact = project.name
-ext.repoVersion = project.version.toString()
-ext.artifact = "${repoArtifact}-${repoVersion}.war"
-ext.downloadedArtifact = new File("$buildDir/$artifact")
-
-task downloadBinaryArchive << {
-	ext.binaryUrl = "$artifactoryUrl/simple/$artifactoryRepository/$repoPath/$repoArtifact/$repoVersion/$artifact"
-	
-	downloadedArtifact.withOutputStream { out ->
-		out << new URL(binaryUrl).openStream()
+repositories {
+	maven {
+		url artifactoryFullRepoUrl
 	}
-	
-	assert downloadedArtifact.exists()
+}
+
+configurations {
+	deployable
+}
+
+dependencies {
+	deployable "com.manning.gia:todo:${project.version.toString()}"
+}
+
+task downloadBinaryArchive(type: Copy) {
+	from configurations.deployable.singleFile()
+	into buildDir
 }
