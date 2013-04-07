@@ -13,21 +13,3 @@ uploadArchives {
         }
     }
 }
-
-task downloadBinaryArchive {
-	ext.repoPath = project.group.replaceAll('\\.', '/')
-	ext.repoArtifact = project.name
-	ext.repoVersion = project.version.toString()
-	ext.artifact = "${repoArtifact}-${repoVersion}.war"
-	ext.downloadedArtifact = new File("$buildDir/$artifact")	
-	
-	doLast {		
-		ext.binaryUrl = "$artifactoryContextUrl/simple/$artifactoryRepository/$repoPath/$repoArtifact/$repoVersion/$artifact"
-	
-		downloadedArtifact.withOutputStream { out ->
-			out << new URL(binaryUrl).openStream()
-		}
-	
-		assert downloadedArtifact.exists()
-	}
-}

@@ -1,6 +1,6 @@
 ext.buildTimestamp = new Date().format('yyyyMMddHHmmss')
 
-version = new ProjectVersion(0, 1, System.env.SOURCE_BUILD_NUMBER)
+version = new ProjectVersion(1, 0, System.env.SOURCE_BUILD_NUMBER)
 
 class ProjectVersion {
 	Integer major
