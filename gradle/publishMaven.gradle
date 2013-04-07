@@ -23,7 +23,7 @@ task downloadBinaryArchive << {
 	ext.binaryUrl = "$artifactoryUrl/simple/$artifactoryRepository/$repoPath/$repoArtifact/$repoVersion/$artifact"
 	
 	downloadedArtifact.withOutputStream { out ->
-		out << new URL(address).openStream()
+		out << new URL(binaryUrl).openStream()
 	}
 	
 	assert downloadedArtifact.exists()
