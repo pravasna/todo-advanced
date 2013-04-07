@@ -13,13 +13,12 @@ uploadArchives {
     }
 }
 
+ext.repoPath = project.group.replaceAll('.', '/')
+ext.repoArtifact = project.name
+ext.repoVersion = project.version.toString()
 ext.artifact = "$repoArtifact-$repoVersion.war"
 
 task downloadBinaryArchive << {
-	ext.repoPath = project.group.replaceAll('.', '/')
-	ext.repoArtifact = project.name
-	ext.repoVersion = project.version.toString()
-	ext.artifact = "$repoArtifact-$repoVersion.war"
 	ext.binaryUrl = "$artifactoryUrl/simple/$artifactoryRepository/$repoPath/$repoArtifact/$repoVersion/$artifact"
 	File downloadedArtifact = new File("$buildDir/$artifact")
 	
