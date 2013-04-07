@@ -16,6 +16,8 @@ dependencies {
           "org.codehaus.cargo:cargo-ant:$cargoVersion"
 }
 
+cargoDeployRemote.dependsOn downloadBinaryArchive
+
 ext.envTestHostname = 'localhost:8099'
 ext.envTestUsername = 'manager'
 ext.envTestPassword = 'manager'
@@ -24,6 +26,7 @@ cargo {
     containerId = 'tomcat7x'
 
     deployable {
+	    file = artifact
         context = 'todo'
     }
 

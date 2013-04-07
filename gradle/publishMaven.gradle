@@ -3,11 +3,29 @@ apply plugin: 'maven'
 ext.artifactoryUrl = 'http://localhost:8081/artifactory' 
 ext.artifactoryUsername = 'admin'
 ext.artifactoryPassword = 'password'
+ext.artifactoryRepository = 'libs-release-local'
 
 uploadArchives {		
     repositories.mavenDeployer {
-        repository(url: "$artifactoryUrl/libs-release-local") {
+        repository(url: "$artifactoryUrl/$artifactoryRepository") {
             authentication(userName: artifactoryUsername, password: artifactoryPassword)
         }
     }
+}
+
+ext.artifact = "$repoArtifact-$repoVersion.war"
+
+task downloadBinaryArchive << {
+	ext.repoPath = project.group.replaceAll('.', '/')
+	ext.repoArtifact = project.name
+	ext.repoVersion = project.version.toString()
+	ext.artifact = "$repoArtifact-$repoVersion.war"
+	ext.binaryUrl = "$artifactoryUrl/simple/$artifactoryRepository/$repoPath/$repoArtifact/$repoVersion/$artifact"
+	File downloadedArtifact = new File("$buildDir/$artifact")
+	
+	downloadedArtifact.withOutputStream { out ->
+		out << new URL(address).openStream()
+	}
+	
+	assert downloadedArtifact.exists()
 }
