@@ -1,0 +1,13 @@
+apply plugin: 'maven'
+
+ext.artifactoryUrl = 'http://localhost:8081/artifactory' 
+ext.artifactoryUsername = 'admin'
+ext.artifactoryPassword = 'password'
+
+uploadArchives {		
+    repositories.mavenDeployer {
+        repository(url: "$artifactoryUrl/libs-release-local") {
+            authentication(userName: artifactoryUsername, password: artifactoryPassword)
+        }
+    }
+}

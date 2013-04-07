@@ -3,9 +3,12 @@ package com.manning.gia.todo.web;
 import com.manning.gia.todo.model.ToDoItem;
 import com.manning.gia.todo.repository.H2ToDoRepository;
 import com.manning.gia.todo.repository.ToDoRepository;
+import com.manning.gia.todo.utils.BuildInfo;
+import com.manning.gia.todo.utils.BuildInfoReader;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +20,13 @@ public class ToDoServlet extends HttpServlet {
 	public static final String FIND_ALL_SERVLET_PATH = "/all";
 	public static final String INDEX_PAGE = "/jsp/todo-list.jsp";
 	private ToDoRepository toDoRepository = new H2ToDoRepository();
+	private BuildInfo buildInfo;
+
+	@Override
+    public void init(ServletConfig config) throws ServletException {
+		BuildInfoReader buildInfoReader = new BuildInfoReader();
+		buildInfo = buildInfoReader.read();
+	}
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,6 +42,7 @@ public class ToDoServlet extends HttpServlet {
 			request.setAttribute("toDoItems", toDoItems);
 			request.setAttribute("stats", determineStats(toDoItems));
 			request.setAttribute("filter", "all");
+			request.setAttribute("buildInfo", buildInfo);
 			return INDEX_PAGE;
 		}
 		else if(servletPath.equals("/active")) {
@@ -39,6 +50,7 @@ public class ToDoServlet extends HttpServlet {
 			request.setAttribute("toDoItems", filterBasedOnStatus(toDoItems, true));
 			request.setAttribute("stats", determineStats(toDoItems));
 			request.setAttribute("filter", "active");
+			request.setAttribute("buildInfo", buildInfo);
 			return INDEX_PAGE;
 		}
 		else if(servletPath.equals("/completed")) {
@@ -46,6 +58,7 @@ public class ToDoServlet extends HttpServlet {
 			request.setAttribute("toDoItems", filterBasedOnStatus(toDoItems, false));
 			request.setAttribute("stats", determineStats(toDoItems));
 			request.setAttribute("filter", "completed");
+			request.setAttribute("buildInfo", buildInfo);
 			return INDEX_PAGE;
 		}
 		if(servletPath.equals("/insert")) {

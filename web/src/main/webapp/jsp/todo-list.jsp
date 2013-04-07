@@ -78,6 +78,14 @@
 </section>
 <div id="info">
     <p>Double-click to edit a todo</p>
+    <c:if test="${not empty buildInfo}">
+        <p>
+			Version <c:out value="${buildInfo.version}" />
+			<c:if test="${not empty buildInfo.buildnumber}">
+			    (Build Number: <c:out value="${buildInfo.buildnumber}" />)
+			</c:if>
+	    </p>
+    </c:if>
 </div>
 </body>
 </html>
