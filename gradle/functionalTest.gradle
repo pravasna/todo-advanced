@@ -7,7 +7,7 @@ configurations {
 }
 
 ext.seleniumGroup = 'org.seleniumhq.selenium'
-ext.seleniumVersion = '2.29.1'
+ext.seleniumVersion = '2.32.0'
 
 dependencies {
     providedCompile 'javax.servlet:servlet-api:2.5'
