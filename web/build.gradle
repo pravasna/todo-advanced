@@ -45,8 +45,11 @@ project(':web') {
 		targetBinary = downloadedArtifact
 	}
 	
-	cargoUndeployRemote.deployables.clear()
-	cargoUndeployRemote.deployables << new Expando(file: '.', context: 'todo')
+	afterEvaluate {
+		cargoUndeployRemote.deployables.clear()
+		cargoUndeployRemote.deployables << new Expando(file: '.', context: 'todo')		
+	}
+
 	cargoDeployRemote.dependsOn downloadBinaryArchive, cargoUndeployRemote
 	
 	ext.envTestHostname = 'localhost'
