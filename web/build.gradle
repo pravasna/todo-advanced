@@ -29,6 +29,8 @@ project(':web') {
 		}
 	}
 	
+	ext.downloadedArtifact = file("$buildDir/download/$war.archiveName") 
+	
 	task downloadBinaryArchive(type: com.manning.gia.BinaryDownload) {
 		ext {
 			repoPath = project.group.replaceAll('\\.', '/')
@@ -36,11 +38,10 @@ project(':web') {
 			repoVersion = project.version.toString()
 			repoArtifact = war.archiveName
 			binaryUrl = "$artifactoryContextUrl/simple/$artifactoryRepository/$repoPath/$repoBaseArtifactName/$repoVersion/$repoArtifact"
-			downloadedArtifact = "$buildDir/download/$repoArtifact"
 		}
 
 		sourceUrl = binaryUrl
-		targetBinary = file(downloadedArtifact)	
+		targetBinary = downloadedArtifact
 	}
 	
 	cargoDeployRemote.dependsOn downloadBinaryArchive
@@ -53,7 +54,7 @@ project(':web') {
 	    containerId = 'tomcat7x'
 
 	    deployable {
-		    file = file(downloadedArtifact)
+		    file = downloadedArtifact
 	        context = 'todo'
 	    }
 
