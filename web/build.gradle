@@ -46,12 +46,13 @@ project(':web') {
 	
 	cargoDeployRemote.dependsOn downloadBinaryArchive
 	
-	ext.envTestHostname = 'localhost:8099'
+	ext.envTestHostname = 'localhost'
 	ext.envTestUsername = 'manager'
 	ext.envTestPassword = 'manager'
 
 	cargo {
 	    containerId = 'tomcat7x'
+		port = 8099
 
 	    deployable {
 		    file = downloadedArtifact
