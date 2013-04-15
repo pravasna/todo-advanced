@@ -31,23 +31,23 @@ project(':web').afterEvaluate {
 	}
 	
 	cargoDeployRemote.dependsOn downloadBinaryArchive
-}
+	
+	ext.envTestHostname = 'localhost:8099'
+	ext.envTestUsername = 'manager'
+	ext.envTestPassword = 'manager'
 
-ext.envTestHostname = 'localhost:8099'
-ext.envTestUsername = 'manager'
-ext.envTestPassword = 'manager'
+	cargo {
+	    containerId = 'tomcat7x'
 
-cargo {
-    containerId = 'tomcat7x'
+	    deployable {
+		    file = file("${buildDir}/${project(':web').war.archiveName}")
+	        context = 'todo'
+	    }
 
-    deployable {
-	    file = file("${buildDir}/${project(':web').war.archiveName}")
-        context = 'todo'
-    }
-
-    remote {
-        hostname = envTestHostname
-        username = envTestUsername
-        password = envTestPassword
-    }
+	    remote {
+	        hostname = envTestHostname
+	        username = envTestUsername
+	        password = envTestPassword
+	    }
+	}
 }
