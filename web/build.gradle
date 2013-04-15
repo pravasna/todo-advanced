@@ -46,7 +46,7 @@ project(':web') {
 	}
 	
 	cargoUndeployRemote.deployables.clear()
-	cargoUndeployRemote.deployables << new org.gradle.api.plugins.cargo.convention.Deployable(file: '.', context: 'todo')
+	cargoUndeployRemote.deployables << new Expando(file: '.', context: 'todo')
 	cargoDeployRemote.dependsOn downloadBinaryArchive, cargoUndeployRemote
 	
 	ext.envTestHostname = 'localhost'
