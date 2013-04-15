@@ -28,4 +28,38 @@ project(':web') {
 		    into('WEB-INF/classes')
 		}
 	}
+	
+	task downloadBinaryArchive(type: com.manning.gia.BinaryDownload) {
+		ext {
+			repoPath = project.group.replaceAll('\\.', '/')
+			repoBaseArtifactName = project(':web').war.baseName
+			repoVersion = project.version.toString()
+			repoArtifact = war.archiveName
+			binaryUrl = "$artifactoryContextUrl/simple/$artifactoryRepository/$repoPath/$repoBaseArtifactName/$repoVersion/$repoArtifact"
+		}
+
+		sourceUrl = binaryUrl
+		targetBinary = file("$buildDir/$repoArtifact")	
+	}
+	
+	cargoDeployRemote.dependsOn downloadBinaryArchive
+	
+	ext.envTestHostname = 'localhost:8099'
+	ext.envTestUsername = 'manager'
+	ext.envTestPassword = 'manager'
+
+	cargo {
+	    containerId = 'tomcat7x'
+
+	    deployable {
+		    file = file(war.archivePath)
+	        context = 'todo'
+	    }
+
+	    remote {
+	        hostname = envTestHostname
+	        username = envTestUsername
+	        password = envTestPassword
+	    }
+	}
 }
