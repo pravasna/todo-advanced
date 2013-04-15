@@ -36,10 +36,11 @@ project(':web') {
 			repoVersion = project.version.toString()
 			repoArtifact = war.archiveName
 			binaryUrl = "$artifactoryContextUrl/simple/$artifactoryRepository/$repoPath/$repoBaseArtifactName/$repoVersion/$repoArtifact"
+			downloadedArtifact = "$buildDir/download/$repoArtifact"
 		}
 
 		sourceUrl = binaryUrl
-		targetBinary = file("$buildDir/$repoArtifact")	
+		targetBinary = file(downloadedArtifact)	
 	}
 	
 	cargoDeployRemote.dependsOn downloadBinaryArchive
@@ -52,7 +53,7 @@ project(':web') {
 	    containerId = 'tomcat7x'
 
 	    deployable {
-		    file = file(war.archivePath)
+		    file = file(downloadedArtifact)
 	        context = 'todo'
 	    }
 
