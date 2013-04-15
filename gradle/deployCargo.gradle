@@ -16,6 +16,7 @@ dependencies {
           "org.codehaus.cargo:cargo-ant:$cargoVersion"
 }
 
+/*
 project(':web').afterEvaluate {
 	task downloadBinaryArchive(type: com.manning.gia.BinaryDownload) {
 		ext {
@@ -50,4 +51,4 @@ project(':web').afterEvaluate {
 	        password = envTestPassword
 	    }
 	}
-}
+}*/
