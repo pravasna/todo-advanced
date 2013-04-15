@@ -35,7 +35,7 @@ project(':web') {
 	task downloadBinaryArchive(type: com.manning.gia.BinaryDownload) {
 		ext {
 			repoPath = project.group.replaceAll('\\.', '/')
-			repoBaseArtifactName = project(':web').war.baseName
+			repoBaseArtifactName = war.baseName
 			repoVersion = project.version.toString()
 			repoArtifact = war.archiveName
 			binaryUrl = "$artifactoryContextUrl/simple/$artifactoryRepository/$repoPath/$repoBaseArtifactName/$repoVersion/$repoArtifact"
@@ -45,7 +45,7 @@ project(':web') {
 		targetBinary = downloadedArtifact
 	}
 	
-	cargoDeployRemote.dependsOn downloadBinaryArchive
+	cargoDeployRemote.dependsOn downloadBinaryArchive, cargoUndeployRemote
 	
 	ext.envTestHostname = 'localhost'
 	ext.envTestUsername = 'manager'
