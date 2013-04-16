@@ -45,15 +45,36 @@ project(':web') {
 		targetBinary = downloadedArtifact
 	}
 	
-	cargoDeployRemote.dependsOn downloadBinaryArchive, cargoUndeployRemote
-	
 	ext.envTestHostname = 'localhost'
 	ext.envTestUsername = 'manager'
 	ext.envTestPassword = 'manager'
-
+	ext.envTestPort = 8099
+	ext.envTestContext = 'todo'	
+	
+	configurations {
+		tomcatAnt
+	}
+	
+	dependencies {
+		tomcatAnt 'org.apache.tomcat:tomcat-catalina-ant:7.0.39'
+	}
+	
+	ext.appContextStatus = {
+		ant.taskdef(name: 'list', classname: 'org.apache.catalina.ant.ListTask', classpath: configurations.tomcatAnt.asPath)
+		ant.list(url: "http://$envTestHostname:$envTestPort/manager/text", username: envTestUsername, password: envTestPassword, outputproperty: 'appContextStatus')
+		String appContextStatus = ant.properties.appContextStatus
+		appContextStatus.indexOf("/$envTestContext:running") != -1 || appContextStatus.indexOf("/$envTestContext:stopped") != -1
+	}
+	
+	cargoUndeployRemote {
+		onlyIf appContextStatus
+	}
+	
+	cargoDeployRemote.dependsOn downloadBinaryArchive, cargoUndeployRemote
+	
 	cargo {
 	    containerId = 'tomcat7x'
-		port = 8099
+		port = envTestPort
 
 	    deployable {
 		    file = downloadedArtifact
