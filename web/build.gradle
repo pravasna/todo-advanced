@@ -45,12 +45,6 @@ project(':web') {
 		targetBinary = downloadedArtifact
 	}
 	
-	ext.envTestHostname = 'localhost'
-	ext.envTestUsername = 'manager'
-	ext.envTestPassword = 'manager'
-	ext.envTestPort = 8099
-	ext.envTestContext = 'todo'	
-	
 	configurations {
 		tomcatAnt
 	}
@@ -61,9 +55,12 @@ project(':web') {
 	
 	ext.appContextStatus = {
 		ant.taskdef(name: 'list', classname: 'org.apache.catalina.ant.ListTask', classpath: configurations.tomcatAnt.asPath)
-		ant.list(url: "http://$envTestHostname:$envTestPort/manager/text", username: envTestUsername, password: envTestPassword, outputproperty: 'appContextStatus')
+		ant.list(url: "http://${config.envs.test.server.hostname}:${config.envs.test.server.port}/manager/text", 
+				 username: config.envs.test.server.username, 
+				 password: config.envs.test.server.password, 
+				 outputproperty: 'appContextStatus')
 		String appContextStatus = ant.properties.appContextStatus
-		appContextStatus.indexOf("/$envTestContext:running") != -1 || appContextStatus.indexOf("/$envTestContext:stopped") != -1
+		appContextStatus.indexOf("/${config.envs.test.server.context}:running") != -1 || appContextStatus.indexOf("/${config.envs.test.server.context}:stopped") != -1
 	}
 	
 	cargoUndeployRemote {
@@ -74,17 +71,17 @@ project(':web') {
 	
 	cargo {
 	    containerId = 'tomcat7x'
-		port = envTestPort
+		port = config.envs.test.server.port
 
 	    deployable {
 		    file = downloadedArtifact
-	        context = 'todo'
+	        context = config.envs.test.server.context
 	    }
 
 	    remote {
-	        hostname = envTestHostname
-	        username = envTestUsername
-	        password = envTestPassword
+	        hostname = config.envs.test.server.hostname
+	        username = config.envs.test.server.username
+	        password = config.envs.test.server.password
 	    }
 	}
 }
