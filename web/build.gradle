@@ -38,7 +38,7 @@ project(':web') {
 			repoBaseArtifactName = war.baseName
 			repoVersion = project.version.toString()
 			repoArtifact = war.archiveName
-			binaryUrl = "$artifactoryContextUrl/simple/$artifactoryRepository/$repoPath/$repoBaseArtifactName/$repoVersion/$repoArtifact"
+			binaryUrl = "${config.binaryRepository.url}/simple/${config.binaryRepository.name}/${repoPath}/${repoBaseArtifactName}/${repoVersion}/${repoArtifact}"
 		}
 
 		sourceUrl = binaryUrl

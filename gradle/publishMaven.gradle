@@ -1,15 +1,11 @@
 apply plugin: 'maven'
 
-ext.artifactoryContextUrl = 'http://localhost:8081/artifactory' 
-ext.artifactoryRepository = 'libs-release-local'
-ext.artifactoryFullRepoUrl = "$artifactoryContextUrl/$artifactoryRepository"
-ext.artifactoryUsername = 'admin'
-ext.artifactoryPassword = 'password'
+ext.fullRepoUrl = "$config.binaryRepository.url/$config.binaryRepository.name"
 
 uploadArchives {		
     repositories.mavenDeployer {
-        repository(url: artifactoryFullRepoUrl) {
-            authentication(userName: artifactoryUsername, password: artifactoryPassword)
+        repository(url: fullRepoUrl) {
+            authentication(userName: config.binaryRepository.username, password: config.binaryRepository.password)
         }
     }
 }
