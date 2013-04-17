@@ -4,7 +4,7 @@ binaryRepository {
 	password = 'password'	
 }
 
-envs {
+environments {
 	test {
 		server {
 			hostname = 'localhost'

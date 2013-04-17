@@ -45,43 +45,21 @@ project(':web') {
 		targetBinary = downloadedArtifact
 	}
 	
-	configurations {
-		tomcatAnt
-	}
-	
-	dependencies {
-		tomcatAnt 'org.apache.tomcat:tomcat-catalina-ant:7.0.39'
-	}
-	
-	ext.appContextStatus = {
-		ant.taskdef(name: 'list', classname: 'org.apache.catalina.ant.ListTask', classpath: configurations.tomcatAnt.asPath)
-		ant.list(url: "http://${config.envs.test.server.hostname}:${config.envs.test.server.port}/manager/text", 
-				 username: config.envs.test.server.username, 
-				 password: config.envs.test.server.password, 
-				 outputproperty: 'appContextStatus')
-		String appContextStatus = ant.properties.appContextStatus
-		appContextStatus.indexOf("/${config.envs.test.server.context}:running") != -1 || appContextStatus.indexOf("/${config.envs.test.server.context}:stopped") != -1
-	}
-	
-	cargoUndeployRemote {
-		onlyIf appContextStatus
-	}
-	
 	cargoDeployRemote.dependsOn downloadBinaryArchive, cargoUndeployRemote
 	
 	cargo {
 	    containerId = 'tomcat7x'
-		port = config.envs.test.server.port
+		port = config.server.port
 
 	    deployable {
 		    file = downloadedArtifact
-	        context = config.envs.test.server.context
+	        context = config.server.context
 	    }
 
 	    remote {
-	        hostname = config.envs.test.server.hostname
-	        username = config.envs.test.server.username
-	        password = config.envs.test.server.password
+	        hostname = config.server.hostname
+	        username = config.server.username
+	        password = config.server.password
 	    }
 	}
 }
