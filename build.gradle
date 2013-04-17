@@ -35,3 +35,12 @@ subprojects {
 task wrapper(type: Wrapper) {
     gradleVersion = '1.5'
 }
+
+task loadConfiguration {
+	def configFile = file("$rootDir/gradle/config/buildConfig.groovy")
+	def parsedConfig = new ConfigSlurper().parse(configFile.toURL())
+	
+	allprojects {
+		ext.config = parsedConfig
+	}
+}
