@@ -15,4 +15,24 @@ environments {
 			password = 'manager'
 		}
 	}
+	
+	uat {
+		server {
+			hostname = 'localhost'
+			port = 8199
+			context = 'todo'
+			username = 'manager'
+			password = 'manager'
+		}
+	}
+	
+	production {
+		server {
+			hostname = 'localhost'
+			port = 8299
+			context = 'todo'
+			username = 'manager'
+			password = 'manager'
+		}
+	}
 }
