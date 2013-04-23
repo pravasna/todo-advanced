@@ -11,7 +11,7 @@
 <section id="todoapp">
     <header id="header">
         <h1>todos</h1>
-        <form action="<c:url value="insert"/>" method="POST">
+        <form id="newItemForm" action="<c:url value="insert"/>" method="POST">
             <input type="hidden" name="filter" value="${filter}"/>
             <input id="new-todo" name="name" placeholder="What needs to be done?" autofocus>
         </form>
