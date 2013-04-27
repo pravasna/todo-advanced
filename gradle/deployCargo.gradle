@@ -22,13 +22,18 @@ dependencies {
 }
 
 ext.appContextStatus = {
+	String serverUrl = "http://${config.server.hostname}:${config.server.port}/manager/text"
 	ant.taskdef(name: 'list', classname: 'org.apache.catalina.ant.ListTask', classpath: configurations.tomcatAnt.asPath)
-	ant.list(url: "http://${config.server.hostname}:${config.server.port}/manager/text", 
-			 username: config.server.username, 
-			 password: config.server.password, 
-			 outputproperty: 'appContextStatus')
-	String appContextStatus = ant.properties.appContextStatus
-	appContextStatus.indexOf("/${config.server.context}:running") != -1 || appContextStatus.indexOf("/${config.server.context}:stopped") != -1
+	
+	try {		
+		ant.list(url: serverUrl, username: config.server.username, password: config.server.password, outputproperty: 'appContextStatus')
+		String appContextStatus = ant.properties.appContextStatus
+		return appContextStatus.contains("/${config.server.context}:running") || appContextStatus.contains("/${config.server.context}:stopped")
+	}
+	catch(Exception e) {
+		logger.error "Failed to connect to '$serverUrl': $e.message"
+		return false
+	}
 }
 
 cargoUndeployRemote {
