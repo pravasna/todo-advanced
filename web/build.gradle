@@ -33,38 +33,38 @@ project(':web') {
 	
     ext.downloadedArtifact = file("$buildDir/download/$war.archiveName") 
 	
-	task downloadBinaryArchive(type: com.manning.gia.BinaryDownload) {
-		ext {
-			repoPath = project.group.replaceAll('\\.', '/')
-			repoBaseArtifactName = war.baseName
-			repoVersion = project.version.toString()
-			repoArtifact = war.archiveName
-			binaryUrl = "${config.binaryRepository.url}/simple/${config.binaryRepository.name}/${repoPath}/${repoBaseArtifactName}/${repoVersion}/${repoArtifact}"
-		}
+    task downloadBinaryArchive(type: com.manning.gia.BinaryDownload) {
+        ext {
+            repoPath = project.group.replaceAll('\\.', '/')
+            repoBaseArtifactName = war.baseName
+            repoVersion = project.version.toString()
+            repoArtifact = war.archiveName
+            binaryUrl = "${config.binaryRepository.url}/simple/${config.binaryRepository.name}/${repoPath}/${repoBaseArtifactName}/${repoVersion}/${repoArtifact}"
+        }
 
-		sourceUrl = binaryUrl
-		targetBinary = downloadedArtifact
-	}
+        sourceUrl = binaryUrl
+        targetBinary = downloadedArtifact
+    }
 	
-	cargoDeployRemote.dependsOn downloadBinaryArchive, cargoUndeployRemote
+    cargoDeployRemote.dependsOn downloadBinaryArchive, cargoUndeployRemote
 	
-	cargo {
-	    containerId = 'tomcat7x'
-		port = config.server.port
+    cargo {
+        containerId = 'tomcat7x'
+        port = config.server.port
 
-	    deployable {
-		    file = downloadedArtifact
-	        context = config.server.context
-	    }
+        deployable {
+            file = downloadedArtifact
+            context = config.server.context
+        }
 
-	    remote {
-	        hostname = config.server.hostname
-	        username = config.server.username
-	        password = config.server.password
-	    }
-	}
+        remote {
+            hostname = config.server.hostname
+            username = config.server.username
+            password = config.server.password
+        }
+    }
 	
-	ext.loadTestResources = "$projectDir/src/loadTest/resources"
+    ext.loadTestResources = "$projectDir/src/loadTest/resources"
 	
     jmeterRun.configure {
         jmeterTestFiles = [file("$loadTestResources/todo-test-plan.jmx")]
