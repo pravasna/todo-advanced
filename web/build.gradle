@@ -66,10 +66,10 @@ project(':web') {
 	
 	ext.loadTestResources = "$projectDir/src/loadTest/resources"
 	
-	jmeterRun.configure {
-	    jmeterTestFiles = [file("$loadTestResources/todo-test-plan.jmx")]
-     	jmeterPropertyFile = file("$loadTestResources/jmeter.properties")
+    jmeterRun.configure {
+        jmeterTestFiles = [file("$loadTestResources/todo-test-plan.jmx")]
+        jmeterPropertyFile = file("$loadTestResources/jmeter.properties")
         jmeterUserProperties = ["hostname=${config.server.hostname}", "port=${config.server.port}", "context=${config.server.context}"]
         logging.captureStandardError LogLevel.INFO
-	}
+    }
 }
