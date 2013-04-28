@@ -1,5 +1,7 @@
 package com.manning.gia.todo.utils;
 
+import java.util.Date;
+
 public class BuildInfo {
 	private String version;
 	private Date timestamp;
