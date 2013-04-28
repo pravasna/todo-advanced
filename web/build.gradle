@@ -4,6 +4,7 @@ project(':web') {
 	apply from: "$rootDir/gradle/publishMaven.gradle"
 	apply from: "$rootDir/gradle/deployCargo.gradle"
 	apply from: "$rootDir/gradle/functionalTest.gradle"
+	apply from: "$rootDir/gradle/loadTest.gradle"
 
     dependencies {
 	    compile project(':repository')
@@ -61,5 +62,14 @@ project(':web') {
 	        username = config.server.username
 	        password = config.server.password
 	    }
+	}
+	
+	ext.loadTestResources = "$projectDir/src/loadTest/resources"
+	
+	jmeterRun.configure {
+	    jmeterTestFiles = [file("$loadTestResources/todo-test-plan.jmx")]
+     	jmeterPropertyFile = file("$loadTestResources/jmeter.properties")
+        jmeterUserProperties = ["hostname=${config.server.hostname}", "port=${config.server.port}", "context=${config.server.context}"]
+        logging.captureStandardError LogLevel.INFO
 	}
 }
