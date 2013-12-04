@@ -21,7 +21,6 @@ allprojects {
     group = 'com.manning.gia'
 	apply from: "$rootDir/gradle/versioning.gradle"
     apply from: "$rootDir/gradle/publishArtifactory.gradle"
-    apply plugin: 'artifactory-publish'
 }
 
 subprojects {
@@ -44,7 +43,7 @@ subprojects {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.5'
+    gradleVersion = '1.9'
 }
 
 task loadConfiguration {
