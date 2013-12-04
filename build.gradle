@@ -20,6 +20,8 @@ allprojects {
     apply plugin: 'idea'
     group = 'com.manning.gia'
 	apply from: "$rootDir/gradle/versioning.gradle"
+    apply from: "$rootDir/gradle/publishArtifactory.gradle"
+    apply plugin: 'artifactory-publish'
 }
 
 subprojects {
