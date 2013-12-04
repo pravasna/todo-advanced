@@ -2,8 +2,14 @@ apply plugin: 'sonar-runner'
 
 sonarRunner {
     sonarProperties {
-        property 'sonar.projectName', 'todo'
+        property "sonar.projectName", "todo"
         property 'sonar.projectDescription', 'A task management application'
+
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.jdbc.url", "jdbc:mysql://rinf-mysql.ctvsrt9j2ypf.eu-west-1.rds.amazonaws.com:3306/sonar"
+        property "sonar.jdbc.driverClassName", "com.mysql.jdbc.Driver"
+        property "sonar.jdbc.username", "sonar"
+        property "sonar.jdbc.password", "Cellini7#F"
     }
 }
 
