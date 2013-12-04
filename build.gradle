@@ -6,7 +6,7 @@ sonarRunner {
         property 'sonar.projectDescription', 'A task management application'
 
         property "sonar.host.url", "http://localhost:9000"
-        property "sonar.login", "sonar.runner"
+        property "sonar.login", "sonar-runner"
         property "sonar.password", "runner"
 
         property "sonar.jdbc.url", "jdbc:mysql://rinf-mysql.ctvsrt9j2ypf.eu-west-1.rds.amazonaws.com:3306/sonar"
