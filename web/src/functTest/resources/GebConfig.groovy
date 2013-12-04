@@ -1,11 +1,6 @@
-import org.openqa.selenium.firefox.FirefoxDriver
+import org.openqa.selenium.phantomjs.PhantomJSDriver
+import org.openqa.selenium.remote.DesiredCapabilities
 
-waiting {
-	timeout = 2
-}
-
-environments {
-	firefox {
-		driver = { new FirefoxDriver() }
-	}
+driver = {
+    new PhantomJSDriver(new DesiredCapabilities())
 }

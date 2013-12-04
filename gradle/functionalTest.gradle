@@ -7,7 +7,7 @@ configurations {
 }
 
 ext.seleniumGroup = 'org.seleniumhq.selenium'
-ext.seleniumVersion = '2.32.0'
+ext.seleniumVersion = '2.33.0'
 
 dependencies {
     providedCompile 'javax.servlet:servlet-api:2.5'
@@ -16,7 +16,11 @@ dependencies {
     testCompile 'junit:junit:4.11'
     functTestCompile 'org.codehaus.geb:geb-junit4:0.7.2'
     functTestCompile "$seleniumGroup:selenium-api:$seleniumVersion"
-    functTestRuntime "$seleniumGroup:selenium-firefox-driver:$seleniumVersion"
+    functTestCompile "$seleniumGroup:selenium-remote-driver:$seleniumVersion"
+    functTestCompile "$seleniumGroup:selenium-support:$seleniumVersion"
+    functTestRuntime ("com.github.detro.ghostdriver:phantomjsdriver:1.0.4") {
+        transitive = false
+    }
 }
 
 sourceSets {
@@ -31,7 +35,7 @@ sourceSets {
 ext {
     functionalTestReportDir = file("$testReportDir/functional")
     functionalTestResultsDir = file("$testResultsDir/functional")
-    functionalCommonSystemProperties = ['geb.env': 'firefox', 'geb.build.reportsDir': reporting.file("$name/geb")]
+    functionalCommonSystemProperties = ['geb.env': 'phantom', 'geb.build.reportsDir': reporting.file("$name/geb")]
 }
 
 ext {
