@@ -19,7 +19,7 @@ ext.artifactoryPassword = 'password'
 artifactory {
 	publish {
 	    contextUrl = artifactoryUrl
-		repoKey = 'libs-snapshot-local'
+		repoKey = 'libs-release-local'
 		username = artifactoryUsername
 		password = artifactoryPassword
 	}
