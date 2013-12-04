@@ -1,6 +1,6 @@
 binaryRepository {
-	url = 'http://localhost:8081/artifactory'
-	username = 'admin'
+	url = 'http://localhost:8081'
+	username = 'todo'
 	password = 'password'
 	name = 'libs-release-local'
 }

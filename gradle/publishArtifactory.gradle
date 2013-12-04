@@ -12,8 +12,8 @@ buildscript {
 
 apply plugin: org.jfrog.gradle.plugin.artifactory.ArtifactoryConfigurationsPlugin
 
-ext.artifactoryUrl = 'http://localhost:8081/artifactory' 
-ext.artifactoryUsername = 'admin'
+ext.artifactoryUrl = 'http://localhost:8081'
+ext.artifactoryUsername = 'todo'
 ext.artifactoryPassword = 'password'
 
 artifactory {
