@@ -1,5 +1,6 @@
 project(':repository') {
 	apply from: "$rootDir/gradle/integrationTest.gradle"
+    apply plugin: 'maven'
 	
     dependencies {
 	    compile project(':model')
