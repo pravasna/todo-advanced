@@ -48,13 +48,13 @@ ext {
 task localFunctionalTest(type: Test) {
     testClassesDir = sourceSets.functionalTest.output.classesDir
     classpath = sourceSets.functionalTest.runtimeClasspath
-    testReportDir = functionalTestReportDir
-    testResultsDir = functionalTestResultsDir
+    reports.html.destination = functionalTestReportDir
+    reports.junitXml.destination = functionalTestResultsDir
     systemProperties functionalCommonSystemProperties
     systemProperty 'geb.build.baseUrl', "http://localhost:$functionalJettyHttpPort/$functionalJettyContextPath/"
 }
 
-task functionalJettyRun(type: org.gradle.api.plugins.jetty.JettyRun) {
+task functionalJettyRun(type: JettyRun) {
 	httpPort = functionalJettyHttpPort
     stopPort = functionalJettyStopPort
     stopKey = functionalJettyStopKey
@@ -62,7 +62,7 @@ task functionalJettyRun(type: org.gradle.api.plugins.jetty.JettyRun) {
     daemon = true
 }
 
-task functionalJettyStop(type: org.gradle.api.plugins.jetty.JettyStop) {
+task functionalJettyStop(type: JettyStop) {
     stopPort = functionalJettyStopPort
     stopKey = functionalJettyStopKey
 }
@@ -75,8 +75,8 @@ task inContainerFunctionalTest(dependsOn: functionalJettyStop)
 task remoteFunctionalTest(type: Test) {
     testClassesDir = sourceSets.functionalTest.output.classesDir
     classpath = sourceSets.functionalTest.runtimeClasspath
-    testReportDir = functionalTestReportDir
-    testResultsDir = functionalTestResultsDir
+    reports.html.destination = functionalTestReportDir
+    reports.junitXml.destination = functionalTestResultsDir
     systemProperties functionalCommonSystemProperties
     systemProperty 'geb.build.baseUrl', "http://$config.server.hostname:$config.server.port/$config.server.context/"
 }

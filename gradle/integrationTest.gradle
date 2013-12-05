@@ -14,7 +14,7 @@ task integrationTest(type: Test) {
     group = 'verification'
     testClassesDir = sourceSets.integrationTest.output.classesDir
     classpath = sourceSets.integrationTest.runtimeClasspath
-    testResultsDir = file("$testResultsDir/integration")
+    reports.junitXml.destination = file("$reports.junitXml.destination/integration")
 }
 
 integrationTest.dependsOn startAndPrepareDatabase
