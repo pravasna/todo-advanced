@@ -24,6 +24,7 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'maven'
     apply from: "$rootDir/gradle/jacoco.gradle"
 
     repositories {
